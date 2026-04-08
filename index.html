@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VerThink</title>
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<button id="installBtn" class="install-btn" style="display:none;">
+Install App
+</button>
+</head>
+
+<body>
+<div class="background-animation"></div>
+<h1 class="title">VerThink</h1>
+
+
+<div class="daily-container">
+
+<div class="daily-card">
+<span class="date" id="dailyDate"></span>
+<span class="share-icon" onclick="shareWord()">🔗</span>
+<p class="daily-word" id="dailyWord"></p>
+<p class="daily-meaning" id="dailyMeaning"></p>
+</div>
+
+<div class="daily-card">
+<span class="date" id="dailyDate2"></span>
+<span class="share-icon" onclick="shareWord()">🔗</span>
+<p class="daily-quote" id="dailyThought"></p>
+<p class="author" id="dailyAuthor"></p>
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+<h2>Word of the Day</h2>
+<button onclick="generateWord()">New Word</button>
+</div>
+
+<div class="card">
+<h2>Thought of the Day</h2>
+<button onclick="generateThought()">New Thought</button>
+</div>
+
+</div>
+
+<!-- POPUP CARD -->
+<div id="popup" class="popup">
+<div class="popup-card">
+<h1 id="popupWord"></h1>
+<p id="popupMeaning"></p>
+<button onclick="closePopup()">Close</button>
+</div>
+</div>
+
+<script src="script.js"></script>
+
+<footer class="footer">
+  © 2026 EETIRP Ltd. | All Rights Reserved
+</footer>
+
+</body>
+</html>
