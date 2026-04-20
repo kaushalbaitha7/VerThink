@@ -15,30 +15,19 @@ background:linear-gradient(
 #141e30
 );
 
-background-size:800% 800%;
-
-animation:bgMove 20s ease infinite;
+background-size:600% 600%;
+animation:bgMove 25s ease infinite;
 }
 
 @keyframes bgMove{
-
-0%{
-background-position:0% 50%;
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
 }
 
-50%{
-background-position:100% 50%;
-}
-
-100%{
-background-position:0% 50%;
-}
-
-}
-/* floating background words */
+/* ---------- BACKGROUND PARTICLES ---------- */
 
 .background-animation{
-
 position:fixed;
 top:0;
 left:0;
@@ -46,57 +35,72 @@ width:100%;
 height:100%;
 pointer-events:none;
 overflow:hidden;
-z-index:-1;
-
+z-index:0;
 }
 
 .background-animation span{
-
 position:absolute;
 display:block;
-width:20px;
-height:20px;
+width:18px;
+height:18px;
 
-background:rgba(0,255,255,0.4);
-box-shadow:0 0 20px #00eaff;
+background:rgba(0,255,255,0.35);
+box-shadow:0 0 20px rgba(0,255,255,0.7);
 
 border-radius:50%;
-
-animation:floatUp linear infinite;
-
+animation:floatUp 15s linear infinite;
 }
 
 @keyframes floatUp{
-
 0%{
-transform:translateY(100vh) scale(0);
+transform:translateY(100vh) scale(0.3);
 opacity:0;
 }
-
-50%{
-opacity:1;
+30%{
+opacity:0.8;
 }
-
 100%{
-transform:translateY(-10vh) scale(1.2);
+transform:translateY(-10vh) scale(1);
 opacity:0;
 }
-
 }
 
-@keyframes float{
+/* ---------- FLOATING LETTERS ---------- */
 
-0%{transform:translateX(-100%)}
-100%{transform:translateX(100%)}
-
+.floating-letter{
+position:absolute;
+font-weight:bold;
+color:rgba(255,255,255,0.18);
+text-shadow:0 0 15px rgba(0,255,255,0.6);
+animation:floatLetter 18s linear infinite;
+user-select:none;
+pointer-events:none;
 }
+
+@keyframes floatLetter{
+0%{
+transform:translateY(100vh) scale(0.5);
+opacity:0;
+}
+50%{
+opacity:0.4;
+}
+100%{
+transform:translateY(-10vh) scale(1.3);
+opacity:0;
+}
+}
+
+/* ---------- TITLE ---------- */
 
 .title{
-
 margin-top:40px;
 font-size:42px;
 font-weight:bold;
 letter-spacing:2px;
+background-clip:text;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 
 background:linear-gradient(
 90deg,
@@ -111,11 +115,6 @@ background:linear-gradient(
 );
 
 background-size:400%;
-
-/* standard property */
-background-clip:text;
-
-/* chrome / safari */
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 
@@ -124,160 +123,14 @@ animation:rgbFlow 8s linear infinite;
 text-shadow:
 0 0 10px rgba(255,255,255,0.3),
 0 0 20px rgba(0,255,255,0.3);
-
 }
 
 @keyframes rgbFlow{
-
-0%{
-background-position:0%;
+0%{background-position:0%;}
+100%{background-position:400%;}
 }
 
-100%{
-background-position:400%;
-}
-
-}
-
-.container{
-
-display:flex;
-justify-content:center;
-gap:60px;
-margin-top:120px;
-
-}
-
-.card{
-
-background:rgba(255,255,255,0.1);
-backdrop-filter:blur(15px);
-border-radius:20px;
-padding:50px;
-width:350px;
-box-shadow:0 8px 32px rgba(0,0,0,0.3);
-
-}
-
-button{
-
-margin-top:20px;
-padding:12px 25px;
-border:none;
-border-radius:10px;
-background:#00c6ff;
-color:white;
-font-size:16px;
-cursor:pointer;
-
-}
-
-/* POPUP */
-
-.popup{
-
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-
-/* DARK + BLUR BACKGROUND */
-background:rgba(0,0,0,0.45);
-backdrop-filter: blur(12px);
--webkit-backdrop-filter: blur(12px);
-
-justify-content:center;
-align-items:center;
-
-z-index:999;
-
-}
-
-.popup-card{
-
-background:rgba(255,255,255,0.12);
-backdrop-filter: blur(20px);
-
-padding:70px;
-border-radius:25px;
-
-width:520px;
-max-width:90%;
-
-box-shadow:0 20px 60px rgba(0,0,0,0.5);
-
-animation:popupShow 0.35s ease;
-
-}
-@keyframes popupShow{
-
-from{
-transform:scale(0.8);
-opacity:0;
-}
-
-to{
-transform:scale(1);
-opacity:1;
-}
-
-}
-
-#popupWord{
-
-font-size:60px;
-font-weight:bold;
-letter-spacing:3px;
-
-}
-
-#popupMeaning{
-
-font-size:22px;
-margin-top:20px;
-
-}
-
-.floating-letter{
-
-position:absolute;
-font-weight:bold;
-color:rgba(255,255,255,0.18);
-text-shadow:0 0 10px rgba(0,255,255,0.5);
-animation:floatLetter linear infinite;
-
-user-select:none;
-pointer-events:none;
-
-}
-
-@keyframes floatLetter{
-
-0%{
-transform:translateY(100vh) scale(0.5);
-opacity:0;
-}
-
-50%{
-opacity:0.35;
-}
-
-100%{
-transform:translateY(-10vh) scale(1.2);
-opacity:0;
-}
-
-}
-
-.author{
-
-font-size:16px;
-opacity:0.8;
-font-style:italic;
-
-}
+/* ---------- DAILY CARDS ---------- */
 
 .daily-container{
 display:flex;
@@ -287,7 +140,6 @@ margin-top:40px;
 }
 
 .daily-card{
-
 width:350px;
 padding:30px;
 border-radius:20px;
@@ -301,7 +153,6 @@ position:relative;
 text-align:center;
 
 animation:cardGlow 4s ease-in-out infinite;
-
 }
 
 @keyframes cardGlow{
@@ -334,80 +185,132 @@ font-size:12px;
 opacity:0.7;
 }
 
-.daily-card h2{
-margin-bottom:10px;
-}
-
-.daily-card p{
-font-size:16px;
-line-height:1.5;
-}
-
-.main-grid{
-display:grid;
-grid-template-columns:repeat(2, 1fr);
-gap:25px;
-width:80%;
-margin:auto;
-margin-top:40px;
-}
-
 .share-icon{
-
 position:absolute;
 top:10px;
 left:15px;
-
 font-size:16px;
 cursor:pointer;
-
 opacity:0.7;
 transition:0.3s;
-
 }
 
 .share-icon:hover{
-
 opacity:1;
 transform:scale(1.2);
-
 }
-.daily-word{
 
+.daily-word{
 font-size:40px;
 font-weight:bold;
 letter-spacing:2px;
-
 }
 
 .daily-quote{
-
 font-size:18px;
 line-height:1.6;
-
 }
 
-.daily-quote{
-
-font-size:18px;
-line-height:1.6;
-
+.author{
+font-size:16px;
+opacity:0.8;
+font-style:italic;
 }
+
+/* ---------- GENERATOR CARDS ---------- */
+
+.container{
+display:flex;
+justify-content:center;
+gap:60px;
+margin-top:120px;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(15px);
+border-radius:20px;
+padding:50px;
+width:350px;
+box-shadow:0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* ---------- BUTTON ---------- */
+
+button{
+margin-top:20px;
+padding:12px 25px;
+border:none;
+border-radius:10px;
+background:#00c6ff;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+/* ---------- POPUP ---------- */
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(12px);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.popup-card{
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(20px);
+padding:70px;
+border-radius:25px;
+width:520px;
+max-width:90%;
+box-shadow:0 20px 60px rgba(0,0,0,0.5);
+animation:popupShow 0.35s ease;
+}
+
+@keyframes popupShow{
+from{
+transform:scale(0.8);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+#popupWord{
+font-size:60px;
+font-weight:bold;
+letter-spacing:3px;
+}
+
+#popupMeaning{
+font-size:22px;
+margin-top:20px;
+}
+
+/* ---------- FOOTER ---------- */
+
 .footer{
-
 margin-top:80px;
 padding:20px 0;
-
 font-size:14px;
 opacity:0.6;
-
 text-align:center;
-
 letter-spacing:1px;
-
 }
-.install-btn{
 
+/* ---------- INSTALL BUTTON ---------- */
+
+.install-btn{
 position:fixed;
 bottom:20px;
 right:20px;
@@ -424,16 +327,15 @@ font-size:14px;
 cursor:pointer;
 
 box-shadow:0 0 15px rgba(0,198,255,0.5);
-
 transition:0.3s;
-
 }
 
 .install-btn:hover{
-
 transform:scale(1.05);
-
 }
+
+/* ---------- MOBILE ---------- */
+
 @media (max-width:768px){
 
 .daily-container{

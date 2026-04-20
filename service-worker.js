@@ -1,14 +1,13 @@
-const CACHE_NAME = "verthink-cache-v1"
+const CACHE_NAME = "verthink-cache-v4"
 
 const urlsToCache = [
 "/",
 "/index.html",
-"/style.css",
-"/script.js",
 "/softskills_words.json",
-"/business_quotes.json",
 "/motivation_quotes.json"
 ]
+
+/* INSTALL */
 
 self.addEventListener("install", event => {
 
@@ -17,17 +16,60 @@ caches.open(CACHE_NAME)
 .then(cache => cache.addAll(urlsToCache))
 )
 
+self.skipWaiting()
+
 })
 
-self.addEventListener("fetch", event => {
+/* ACTIVATE */
 
-event.respondWith(
-caches.match(event.request)
-.then(response => {
+self.addEventListener("activate", event => {
 
-return response || fetch(event.request)
+event.waitUntil(
+caches.keys().then(keys => {
+
+return Promise.all(
+keys.filter(key => key !== CACHE_NAME)
+.map(key => caches.delete(key))
+)
 
 })
 )
 
+self.clients.claim()
+
 })
+
+/* FETCH */
+
+self.addEventListener("fetch", event => {
+
+event.respondWith(
+
+fetch(event.request)
+.then(response => {
+
+let responseClone = response.clone()
+
+caches.open(CACHE_NAME)
+.then(cache => cache.put(event.request, responseClone))
+
+return response
+
+})
+.catch(() => caches.match(event.request))
+
+)
+
+})
+
+if ("serviceWorker" in navigator) {
+
+window.addEventListener("load", () => {
+
+navigator.serviceWorker
+.register("service-worker.js")
+.then(() => console.log("Service Worker Registered"))
+
+})
+
+}
