@@ -7,6 +7,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
 import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-messaging.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
 apiKey: "AIzaSyBM2gM2d24Fp3wH9v0sb0a_UChuz1KvFR8",
@@ -18,7 +19,15 @@ appId: "1:732567518586:web:2d9612aa832fa1491b6ac3"
 };
 
 const app = initializeApp(firebaseConfig);
+
+/* Firestore */
+const db = getFirestore(app);
+
+/* Messaging */
 const messaging = getMessaging(app);
+
+
+/* Enable Notification */
 
 window.enableNotification = async function(){
 
@@ -38,6 +47,9 @@ alert("Notifications Enabled 🔔");
 
 };
 
+
+/* Receive notification */
+
 onMessage(messaging,(payload)=>{
 
 new Notification(payload.notification.title,{
@@ -46,6 +58,31 @@ icon:"/icon-192.png"
 });
 
 });
+
+
+/* Load Daily Content from Firestore */
+
+async function loadDailyContent(){
+
+const docRef = doc(db,"dailyContent","today");
+
+const docSnap = await getDoc(docRef);
+
+if(docSnap.exists()){
+
+const data = docSnap.data();
+
+document.getElementById("dailyWord").textContent = data.word;
+document.getElementById("dailyMeaning").textContent = data.meaning;
+
+document.getElementById("dailyThought").textContent = data.thought;
+document.getElementById("dailyAuthor").textContent = "— " + data.author;
+
+}
+
+}
+
+loadDailyContent();
 
 </script>
 
