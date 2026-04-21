@@ -310,28 +310,127 @@ letter-spacing:1px;
 
 /* ---------- INSTALL BUTTON ---------- */
 
-.install-btn{
-position:fixed;
-bottom:20px;
-right:20px;
-z-index:1000;
+/* ===== Floating Action Bar ===== */
 
-padding:12px 20px;
-border:none;
+/* Floating Action Bar */
+
+.action-bar{
+
+position:fixed;
+bottom:16px;
+right:16px;
+
+display:flex;
+align-items:center;
+gap:8px;
+
+padding:6px 12px;
+
 border-radius:30px;
 
-background:linear-gradient(45deg,#00c6ff,#0072ff);
+background:linear-gradient(135deg,#33464b,#0072ff,#1d3031);
+
+box-shadow:0 6px 18px rgba(0,200,255,0.35);
+
+backdrop-filter:blur(8px);
+
+z-index:1000;
+
+/* animation */
+animation: slideIn 0.8s ease forwards;
+
+}
+
+/* slide animation */
+
+@keyframes slideIn {
+
+0%{
+transform:translateX(120px);
+opacity:0;
+}
+
+100%{
+transform:translateX(0);
+opacity:1;
+}
+
+}
+/* Bell button */
+
+#notifyBtn{
+
+width: 30px;
+height:30px;
+
+border-radius:50%;
+border:none;
+
+background:rgba(255,255,255,0.15);
+
 color:white;
 
 font-size:14px;
+
 cursor:pointer;
 
-box-shadow:0 0 15px rgba(0,198,255,0.5);
-transition:0.3s;
+display:flex;
+align-items:center;
+justify-content:center;
+
+animation: bellPulse 2s infinite;
+
+}
+
+/* bell pulse */
+
+@keyframes bellPulse{
+
+0%{
+box-shadow:0 0 0 0 rgba(255,255,255,0.6);
+}
+
+70%{
+box-shadow:0 0 0 10px rgba(255,255,255,0);
+}
+
+100%{
+box-shadow:0 0 0 0 rgba(255,255,255,0);
+}
+
+}
+
+.install-btn{
+
+border:none;
+
+background:transparent;
+
+color:white;
+
+font-size:13px;
+
+font-weight:600;
+
+cursor:pointer;
+
+padding:4px 6px;
+
+}
+
+/* Hover effects */
+
+#notifyBtn:hover{
+
+background:rgba(255,255,255,0.3);
+transform:scale(1.1);
+
 }
 
 .install-btn:hover{
-transform:scale(1.05);
+
+opacity:0.85;
+
 }
 
 /* ---------- MOBILE ---------- */

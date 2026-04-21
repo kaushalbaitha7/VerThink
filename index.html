@@ -2,6 +2,53 @@
 <html>
 
 <head>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-messaging.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyBM2gM2d24Fp3wH9v0sb0a_UChuz1KvFR8",
+authDomain: "verthink-kkb.firebaseapp.com",
+projectId: "verthink-kkb",
+storageBucket: "verthink-kkb.firebasestorage.app",
+messagingSenderId: "732567518586",
+appId: "1:732567518586:web:2d9612aa832fa1491b6ac3"
+};
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+window.enableNotification = async function(){
+
+const permission = await Notification.requestPermission();
+
+if(permission === "granted"){
+
+const token = await getToken(messaging,{
+vapidKey:"BDYr5fX-tLnNtx-7KMBI3GtLl8Hj_gsnoiDO3JXBZf_3fOHgbZFnVhX5W4S-t-IhzfNUyAe9zqyYhOX7t4ctUDU"
+});
+
+console.log("TOKEN:",token);
+
+alert("Notifications Enabled 🔔");
+
+}
+
+};
+
+onMessage(messaging,(payload)=>{
+
+new Notification(payload.notification.title,{
+body:payload.notification.body,
+icon:"/icon-192.png"
+});
+
+});
+
+</script>
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#141e30">
 <link rel="icon" href="icon-192.png">
@@ -23,11 +70,15 @@
 
 
 <!-- INSTALL BUTTON -->
+<div class="action-bar">
 
-<button id="installBtn" class="install-btn" style="display:none;">
+<button id="notifyBtn" onclick="enableNotification()">🔔</button>
+
+<button id="installBtn" class="install-btn">
 Install App
 </button>
 
+</div>
 
 
 <!-- DAILY CARDS -->
