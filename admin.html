@@ -3,120 +3,53 @@
 
 <head>
 
-<title>VerThink Teacher Panel</title>
+<title>VerThink Admin Panel</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script type="module">
+<link rel="stylesheet" href="admin.css">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyBM2gM2d24Fp3wH9v0sb0a_UChuz1KvFR8",
-authDomain: "verthink-kkb.firebaseapp.com",
-projectId: "verthink-kkb",
-storageBucket: "verthink-kkb.firebasestorage.app",
-messagingSenderId: "732567518586",
-appId: "1:732567518586:web:2d9612aa832fa1491b6ac3"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.publishWord = async function(){
-
-const word = document.getElementById("word").value;
-const meaning = document.getElementById("meaning").value;
-const thought = document.getElementById("thought").value;
-const author = document.getElementById("author").value;
-
-await setDoc(doc(db,"dailyContent","today"),{
-
-word: word,
-meaning: meaning,
-thought: thought,
-author: author,
-date: new Date().toLocaleDateString()
-
-});
-
-alert("Word Published Successfully 🚀");
-
-}
-
-</script>
-
-<style>
-
-body{
-font-family:Arial;
-background:#0f2027;
-color:white;
-text-align:center;
-padding:40px;
-}
-
-h1{
-margin-bottom:30px;
-}
-
-input{
-
-width:300px;
-padding:12px;
-margin:10px;
-
-border:none;
-border-radius:10px;
-
-}
-
-button{
-
-padding:12px 25px;
-
-border:none;
-border-radius:25px;
-
-background:linear-gradient(45deg,#00c6ff,#0072ff);
-
-color:white;
-font-weight:bold;
-
-cursor:pointer;
-
-}
-
-</style>
+<script type="module" src="admin.js"></script>
 
 </head>
 
 <body>
 
-<h1>VerThink Teacher Panel</h1>
+<h1 class="title">VerThink Teacher Panel</h1>
 
-<input id="word" placeholder="Word of the Day">
+<!-- LOGIN CARD -->
 
-<br>
+<div class="login-card">
+
+<h2>Teacher Login</h2>
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="error"></p>
+
+</div>
+
+<!-- ADMIN PANEL -->
+
+<div class="admin-panel" style="display:none;">
+
+<h2>Update Daily Word</h2>
+
+<input id="word" placeholder="Word">
 
 <input id="meaning" placeholder="Meaning">
 
-<br>
-
-<input id="thought" placeholder="Thought of the Day">
-
-<br>
+<textarea id="thought" placeholder="Quote"></textarea>
 
 <input id="author" placeholder="Author">
 
-<br><br>
+<button onclick="updateWord()">Update</button>
 
-<button onclick="publishWord()">
-
-Publish
-
-</button>
+</div>
 
 </body>
 

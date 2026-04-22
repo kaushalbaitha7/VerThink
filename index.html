@@ -3,99 +3,16 @@
 
 <head>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-messaging.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyBM2gM2d24Fp3wH9v0sb0a_UChuz1KvFR8",
-authDomain: "verthink-kkb.firebaseapp.com",
-projectId: "verthink-kkb",
-storageBucket: "verthink-kkb.firebasestorage.app",
-messagingSenderId: "732567518586",
-appId: "1:732567518586:web:2d9612aa832fa1491b6ac3"
-};
-
-const app = initializeApp(firebaseConfig);
-
-/* Firestore */
-const db = getFirestore(app);
-
-/* Messaging */
-const messaging = getMessaging(app);
-
-
-/* Enable Notification */
-
-window.enableNotification = async function(){
-
-const permission = await Notification.requestPermission();
-
-if(permission === "granted"){
-
-const token = await getToken(messaging,{
-vapidKey:"BDYr5fX-tLnNtx-7KMBI3GtLl8Hj_gsnoiDO3JXBZf_3fOHgbZFnVhX5W4S-t-IhzfNUyAe9zqyYhOX7t4ctUDU"
-});
-
-console.log("TOKEN:",token);
-
-alert("Notifications Enabled 🔔");
-
-}
-
-};
-
-
-/* Receive notification */
-
-onMessage(messaging,(payload)=>{
-
-new Notification(payload.notification.title,{
-body:payload.notification.body,
-icon:"/icon-192.png"
-});
-
-});
-
-
-/* Load Daily Content from Firestore */
-
-async function loadDailyContent(){
-
-const docRef = doc(db,"dailyContent","today");
-
-const docSnap = await getDoc(docRef);
-
-if(docSnap.exists()){
-
-const data = docSnap.data();
-
-document.getElementById("dailyWord").textContent = data.word;
-document.getElementById("dailyMeaning").textContent = data.meaning;
-
-document.getElementById("dailyThought").textContent = data.thought;
-document.getElementById("dailyAuthor").textContent = "— " + data.author;
-
-}
-
-}
-
-loadDailyContent();
-
-</script>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#141e30">
-<link rel="icon" href="icon-192.png">
-
 <title>VerThink</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="logo.png">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#141e30">
+
+<link rel="icon" href="icon-192.png">
 
 </head>
 
@@ -104,18 +21,6 @@ loadDailyContent();
 <div class="background-animation"></div>
 
 <h1 class="title">VerThink</h1>
-
-
-<!-- INSTALL BUTTON -->
-<div class="action-bar">
-
-<button id="notifyBtn" onclick="enableNotification()">🔔</button>
-
-<button id="installBtn" class="install-btn">
-Install App
-</button>
-
-</div>
 
 
 <!-- DAILY CARDS -->
@@ -127,8 +32,9 @@ Install App
 <span class="date" id="dailyDate"></span>
 
 <span class="share-icon" onclick="shareWord()">🔗</span>
+<span class="download-icon" onclick="downloadWord()">⬇️</span>
 
-<p class="daily-word" id="dailyWord"></p>
+<p class="daily-word" id="dailyWord">Loading...</p>
 
 <p class="daily-meaning" id="dailyMeaning"></p>
 
@@ -140,8 +46,9 @@ Install App
 <span class="date" id="dailyDate2"></span>
 
 <span class="share-icon" onclick="shareQuote()">🔗</span>
+<span class="download-icon" onclick="downloadQuote()">⬇️</span>
 
-<p class="daily-quote" id="dailyThought"></p>
+<p class="daily-quote" id="dailyThought">Loading...</p>
 
 <p class="author" id="dailyAuthor"></p>
 
@@ -150,13 +57,13 @@ Install App
 </div>
 
 
-<!-- GENERATOR BUTTONS -->
+<!-- RANDOM GENERATOR -->
 
 <div class="container">
 
 <div class="card">
 
-<h2>Word of the Day</h2>
+<h2>Word Generator</h2>
 
 <button onclick="generateWord()">New Word</button>
 
@@ -164,7 +71,7 @@ Install App
 
 <div class="card">
 
-<h2>Thought of the Day</h2>
+<h2>Thought Generator</h2>
 
 <button onclick="generateThought()">New Thought</button>
 
@@ -190,19 +97,30 @@ Install App
 </div>
 
 
-<!-- SCRIPT -->
-
-<script src="script.js"></script>
-
-
-<!-- FOOTER -->
-
 <footer class="footer">
-
 © 2026 EETIRP Ltd. | All Rights Reserved
-
 </footer>
 
-</body>
 
+<!-- SHARE CANVAS -->
+
+<canvas id="shareCanvas" width="800" height="420" style="display:none;"></canvas>
+
+
+<!-- FLOATING ACTION BAR -->
+
+<div class="action-bar">
+
+<button id="notifyBtn" onclick="enableNotification()">🔔</button>
+
+<button id="installBtn" class="install-btn">📲</button>
+
+</div>
+
+
+<!-- MAIN SCRIPT -->
+
+<script type="module" src="script.js"></script>
+
+</body>
 </html>

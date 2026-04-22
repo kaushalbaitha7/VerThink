@@ -1,8 +1,10 @@
-const CACHE_NAME = "verthink-cache-v4"
+const CACHE_NAME = "verthink-cache-v5"
 
 const urlsToCache = [
 "/",
 "/index.html",
+"/style.css",
+"/script.js",
 "/softskills_words.json",
 "/motivation_quotes.json"
 ]
@@ -61,15 +63,3 @@ return response
 )
 
 })
-
-if ("serviceWorker" in navigator) {
-
-window.addEventListener("load", () => {
-
-navigator.serviceWorker
-.register("service-worker.js")
-.then(() => console.log("Service Worker Registered"))
-
-})
-
-}
