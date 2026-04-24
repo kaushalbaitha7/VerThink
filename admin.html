@@ -4,6 +4,7 @@
 <head>
 
 <title>VerThink Admin Panel</title>
+<button id="logoutBtn" onclick="logout()">Logout</button>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -50,6 +51,24 @@
 <button onclick="updateWord()">Update</button>
 
 </div>
+
+<!-- EDITORIAL UPDATE -->
+
+<div class="admin-panel" style="display:none;" id="editorialPanel">
+
+<h2>Update Editorial / Notice</h2>
+
+<textarea id="editorialContent" placeholder="Paste article / notice here..."></textarea>
+
+<input id="editorialDate" placeholder="Date (e.g. 24 April 2026)">
+
+<button onclick="updateEditorial()">Publish Editorial</button>
+
+</div>
+
+<footer class="footer">
+© 2026 EETIRP Ltd. | All Rights Reserved
+</footer>
 
 </body>
 

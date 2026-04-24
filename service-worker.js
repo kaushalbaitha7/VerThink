@@ -1,65 +1,97 @@
-const CACHE_NAME = "verthink-cache-v5"
+/* ---------- CACHE VERSION ---------- */
+
+const CACHE_NAME = "verthink-cache-v7";
+
+/* ---------- FILES TO CACHE ---------- */
 
 const urlsToCache = [
-"/",
-"/index.html",
-"/style.css",
-"/script.js",
-"/softskills_words.json",
-"/motivation_quotes.json"
-]
+  "/",
+  "/index.html",
+  "/style.css",
+  "/script.js",
+  "/softskills_words.json",
+  "/motivation_quotes.json",
+  "/icon-192.png",
+  "/icon-512.png"
+];
 
-/* INSTALL */
+/* ---------- INSTALL ---------- */
 
-self.addEventListener("install", event => {
+self.addEventListener("install", (event) => {
 
-event.waitUntil(
-caches.open(CACHE_NAME)
-.then(cache => cache.addAll(urlsToCache))
-)
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(urlsToCache))
+  );
 
-self.skipWaiting()
+  self.skipWaiting();
 
-})
+});
 
-/* ACTIVATE */
+/* ---------- ACTIVATE ---------- */
 
-self.addEventListener("activate", event => {
+self.addEventListener("activate", (event) => {
 
-event.waitUntil(
-caches.keys().then(keys => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys
+          .filter((key) => key !== CACHE_NAME)
+          .map((key) => caches.delete(key))
+      );
+    })
+  );
 
-return Promise.all(
-keys.filter(key => key !== CACHE_NAME)
-.map(key => caches.delete(key))
-)
+  self.clients.claim();
 
-})
-)
+});
 
-self.clients.claim()
+/* ---------- FETCH ---------- */
 
-})
+self.addEventListener("fetch", (event) => {
 
-/* FETCH */
+  const request = event.request;
 
-self.addEventListener("fetch", event => {
+  /* 🚫 Ignore NON-GET requests (VERY IMPORTANT) */
+  if (request.method !== "GET") return;
 
-event.respondWith(
+  /* 🚫 Ignore Firebase / external APIs */
+  if (!request.url.startsWith(self.location.origin)) return;
 
-fetch(event.request)
-.then(response => {
+  event.respondWith(
 
-let responseClone = response.clone()
+    caches.match(request).then((cachedResponse) => {
 
-caches.open(CACHE_NAME)
-.then(cache => cache.put(event.request, responseClone))
+      /* ✅ Return from cache if exists */
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-return response
+      /* 🌐 Else fetch from network */
+      return fetch(request)
+        .then((networkResponse) => {
 
-})
-.catch(() => caches.match(event.request))
+          /* Safety check */
+          if (!networkResponse || networkResponse.status !== 200) {
+            return networkResponse;
+          }
 
-)
+          const responseClone = networkResponse.clone();
 
-})
+          /* 💾 Save in cache */
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
+
+          return networkResponse;
+        })
+        .catch(() => {
+          /* Offline fallback */
+          return caches.match("/index.html");
+        });
+
+    })
+
+  );
+
+});

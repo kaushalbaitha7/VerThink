@@ -1,13 +1,17 @@
+/* ---------- BODY ---------- */
+
 body{
 
-background:#0f2027;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
 
-font-family:Arial;
+font-family:Arial, sans-serif;
 
 text-align:center;
 
 }
+
+/* ---------- TITLE ---------- */
 
 .title{
 
@@ -16,27 +20,56 @@ font-size:38px;
 
 color:#00eaff;
 
+text-shadow:0 0 10px rgba(0,255,255,0.6);
+
 }
+
+/* ---------- CARDS ---------- */
 
 .login-card,
 .admin-panel{
-
 width:400px;
-
 margin:auto;
-margin-top:70px;
-
+margin-top:50px;
 padding:30px;
-
 border-radius:20px;
 
-background:rgba(255,255,255,0.08);
+/* 👇 DARKER GLASS */
+background:rgba(10,20,30,0.85);
 
-backdrop-filter:blur(10px);
+backdrop-filter:blur(14px);
 
-box-shadow:0 0 25px rgba(0,255,255,0.3);
+/* 👇 STRONG DEPTH SHADOW */
+box-shadow:
+0 0 40px rgba(0,255,255,0.25),
+0 10px 40px rgba(0,0,0,0.6);
+
+border:1px solid rgba(0,255,255,0.15);
+}
+
+.login-card:hover,
+.admin-panel:hover{
+
+transform:translateY(-5px);
+
+box-shadow:
+0 0 35px rgba(0,255,255,0.5),
+inset 0 0 15px rgba(255,255,255,0.1);
 
 }
+
+/* ---------- HEADINGS ---------- */
+
+.admin-panel h2{
+
+margin-bottom:15px;
+color:#00eaff;
+
+text-shadow:0 0 6px rgba(0,255,255,0.5);
+
+}
+
+/* ---------- INPUT ---------- */
 
 input,
 textarea{
@@ -48,35 +81,184 @@ margin-top:12px;
 padding:12px;
 
 border:none;
-
-border-radius:8px;
+border-radius:10px;
 
 background:rgba(255,255,255,0.1);
 
 color:white;
 
+outline:none;
+
+transition:0.3s;
+
 }
+
+/* focus glow */
+
+input:focus,
+textarea:focus{
+
+background:rgba(255,255,255,0.15);
+
+box-shadow:0 0 10px rgba(0,255,255,0.4);
+
+}
+
+/* textarea special */
+
+textarea{
+
+min-height:100px;
+resize:none;
+
+}
+
+/* ---------- BUTTON ---------- */
 
 button{
 
-margin-top:15px;
+margin-top:18px;
 
-padding:10px 20px;
+padding:12px;
+
+width:100%;
 
 border:none;
+border-radius:12px;
 
-border-radius:10px;
-
-background:#00eaff;
+background:linear-gradient(135deg,#00eaff,#00c4d6);
 
 color:black;
 
+font-weight:bold;
+
 cursor:pointer;
+
+transition:0.3s;
 
 }
 
+/* hover */
+
 button:hover{
 
-background:#00c4d6;
+transform:scale(1.03);
 
+box-shadow:
+0 0 15px #00eaff,
+0 0 25px #00eaff;
+
+}
+
+/* ---------- ERROR ---------- */
+
+#error{
+
+color:#ff4d4d;
+margin-top:10px;
+
+}
+
+/* ---------- EDITORIAL SPECIAL STYLE ---------- */
+
+#editorialPanel{
+
+border:2px solid rgba(0,255,255,0.4);
+
+box-shadow:
+0 0 30px rgba(0,255,255,0.5),
+inset 0 0 10px rgba(0,255,255,0.2);
+
+}
+
+/* header badge feel */
+
+#editorialPanel h2{
+
+color:#ffd700;
+
+text-shadow:
+0 0 10px rgba(255,215,0,0.7);
+
+}
+
+/* editorial textarea bigger */
+
+#editorialContent{
+
+min-height:160px;
+
+font-size:15px;
+line-height:1.5;
+
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width:500px){
+
+.login-card,
+.admin-panel{
+
+width:90%;
+
+}
+
+.title{
+
+font-size:28px;
+
+}
+
+}
+
+#logoutBtn{
+position:fixed;
+top:12px;
+right:16px;
+
+padding:4px 10px;
+font-size:12px;
+
+background:transparent;
+color:#00eaff;
+
+border:none;
+outline:none;
+
+cursor:pointer;
+
+display:none;
+z-index:999;
+
+/* prevent stretch */
+width:auto;
+max-width:fit-content;
+white-space:nowrap;
+}
+
+/* subtle underline hover */
+#logoutBtn:hover{
+text-decoration:underline;
+color:white;
+}
+
+
+/* footer */
+
+.footer{
+text-align:center;
+
+padding:10px 0;
+
+font-size:13px;
+color:rgba(255,255,255,0.7);
+
+/* 👇 no box look */
+background:none;
+border:none;
+box-shadow:none;
+
+/* 👇 stick bottom */
+margin-top:auto;
 }
