@@ -9,7 +9,7 @@ min-height:100vh;
 overflow-x:hidden;
 
 /* 👇 less bluish */
-background:linear-gradient(135deg,#07131a,#0c1f2a,#132f3c);
+background:linear-gradient(135deg,#699ebb,#3b494a,#112833);
 }
 
 /* ---------- BACKGROUND FLOAT ---------- */
@@ -43,12 +43,29 @@ animation:floatLetter linear infinite;
 
 .title{
 margin-top:40px;
-font-size:40px;
+font-size:42px;
 font-weight:bold;
 letter-spacing:2px;
+
+/* 👇 color animation */
 color:#00eaff;
-text-shadow:0 0 12px rgba(0,255,255,0.4);
+animation:colorShift 6s linear infinite;
+
+/* soft glow */
+text-shadow:
+0 0 8px rgba(0,255,255,0.4),
+0 0 16px rgba(0,255,255,0.2);
 }
+
+/* 👇 MULTI COLOR CHANGE */
+@keyframes colorShift{
+0%   { color:#10d68a; }
+25%  { color:#00ffcc; }
+50%  { color:#6ce516; }
+75%  { color:#4facfe; }
+100% { color:#3b0b67; }
+}
+
 
 /* ---------- DAILY CARDS ---------- */
 

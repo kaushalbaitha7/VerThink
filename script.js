@@ -4,6 +4,30 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/fireba
 import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-messaging.js";
 import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
+
+/* ---------- TEXT WRAP HELPER (GLOBAL) ---------- */
+window.wrapText = function(ctx, text, x, y, maxWidth, lineHeight){
+
+  const words = (text || "").split(" ");
+  let line = "";
+
+  for(let n=0; n<words.length; n++){
+
+    const testLine = line + words[n] + " ";
+    const testWidth = ctx.measureText(testLine).width;
+
+    if(testWidth > maxWidth && n > 0){
+      ctx.fillText(line, x, y);
+      line = words[n] + " ";
+      y += lineHeight;
+    }else{
+      line = testLine;
+    }
+  }
+
+  ctx.fillText(line, x, y);
+};
+
 const firebaseConfig = {
 apiKey: "AIzaSyBM2gM2d24Fp3wH9v0sb0a_UChuz1KvFR8",
 authDomain: "verthink-kkb.firebaseapp.com",
@@ -154,6 +178,103 @@ window.shareQuote = ()=>{
 let text = dailyThought.innerText + " " + dailyAuthor.innerText;
 window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(text));
 };
+
+/* ---------- CANVAS DOWNLOAD ---------- */
+
+window.downloadWord = function(){
+
+const canvas = generateWordCard(); // 👈 तुम्हारा existing function
+
+canvas.toBlob(function(blob){
+
+const link = document.createElement("a");
+link.href = URL.createObjectURL(blob);
+link.download = "verthink_word.png";
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+URL.revokeObjectURL(link.href);
+
+}, "image/png");
+
+};
+function generateWordCard(){
+
+const canvas = document.getElementById("shareCanvas");
+const ctx = canvas.getContext("2d");
+
+/* background */
+ctx.fillStyle = "#0f2027";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+/* word */
+ctx.fillStyle = "#00eaff";
+ctx.font = "bold 40px Arial";
+ctx.textAlign = "center";
+
+const word = document.getElementById("dailyWord").innerText;
+ctx.fillText(word, canvas.width/2, 150);
+
+/* meaning */
+ctx.fillStyle = "#ffffff";
+ctx.font = "20px Arial";
+
+const meaning = document.getElementById("dailyMeaning").innerText;
+wrapText(ctx, meaning, canvas.width/2, 220, 600, 26);
+
+return canvas;
+}
+
+window.downloadQuote = function(){
+
+const canvas = generateQuoteCard(); // 👈 तुम्हारा existing function
+
+canvas.toBlob(function(blob){
+
+const link = document.createElement("a");
+link.href = URL.createObjectURL(blob);
+link.download = "verthink_quote.png";
+
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+
+URL.revokeObjectURL(link.href);
+
+}, "image/png");
+
+};
+
+function generateQuoteCard(){
+
+const canvas = document.getElementById("shareCanvas");
+const ctx = canvas.getContext("2d");
+
+/* background */
+ctx.fillStyle = "#0f2027";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+/* quote */
+ctx.fillStyle = "#00eaff";
+ctx.font = "22px Arial";
+ctx.textAlign = "center";
+
+const quote = document.getElementById("dailyThought").innerText;
+wrapText(ctx, quote, canvas.width/2, 180, 600, 28);
+
+/* author */
+ctx.fillStyle = "#ffffff";
+ctx.font = "18px Arial";
+
+const author = document.getElementById("dailyAuthor").innerText;
+ctx.fillText(author, canvas.width/2, 320);
+
+return canvas;
+}
+
+
 
 /* ---------- NOTIFICATION ---------- */
 
