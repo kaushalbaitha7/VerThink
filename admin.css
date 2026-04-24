@@ -262,3 +262,80 @@ box-shadow:none;
 /* 👇 stick bottom */
 margin-top:auto;
 }
+
+/* ---------- MOBILE PERFECT EXTENSION ---------- */
+
+@media (max-width:768px){
+
+body{
+padding:0 12px;
+}
+
+/* cards spacing improve */
+.login-card,
+.admin-panel{
+width:100%;
+margin-top:30px;
+padding:22px;
+}
+
+/* title adjust */
+.title{
+font-size:30px;
+margin-top:25px;
+}
+
+/* inputs touch friendly */
+input,
+textarea{
+padding:14px;
+font-size:15px;
+}
+
+/* buttons bigger tap area */
+button{
+padding:14px;
+font-size:15px;
+}
+
+/* logout button safe position */
+#logoutBtn{
+top:10px;
+right:12px;
+font-size:11px;
+}
+
+/* footer spacing */
+.footer{
+font-size:12px;
+padding:14px 0;
+}
+
+}
+
+/* ---------- SMALL DEVICES (PHONES) ---------- */
+
+@media (max-width:420px){
+
+.title{
+font-size:26px;
+}
+
+.login-card,
+.admin-panel{
+padding:18px;
+border-radius:16px;
+}
+
+input,
+textarea{
+padding:12px;
+font-size:14px;
+}
+
+button{
+padding:12px;
+font-size:14px;
+}
+
+}
